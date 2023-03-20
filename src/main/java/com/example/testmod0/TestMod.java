@@ -1,9 +1,14 @@
 package com.example.testmod0;
 
+import com.example.testmod0.item.ModCreativeModeTabs;
+import com.example.testmod0.item.ModItems;
 import com.mojang.logging.LogUtils;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,15 +27,24 @@ public class TestMod
     public TestMod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModItems.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        modEventBus.addListener(this::addCreative);
 
     }
-    //COMENTARIO IMPORTANTE
+
+    private void addCreative(CreativeModeTabEvent.BuildContents event){
+        if(event.getTab() == ModCreativeModeTabs.TESTMOD_TAB){
+            event.accept(ModItems.gerbera);
+            event.accept(ModItems.luka);
+        }
+    }
+
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         // Some common setup code
