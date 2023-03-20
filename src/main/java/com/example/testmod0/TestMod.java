@@ -30,7 +30,7 @@ public class TestMod
         MinecraftForge.EVENT_BUS.register(this);
 
     }
-
+    //COMENTARIO IMPORTANTE
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         // Some common setup code
